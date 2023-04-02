@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+	<h2>
+		Welcome to <b>D-viz</b> Blog....
+	</h2>
+	<hr>
+	<h5>Login to your account please.</h5>
+	<br>
+	<form method="POST" action=".">
+		{% csrf_token %}
+	  <div class="mb-3">
+	    <label for="exampleInputUsername1" class="form-label">Username</label>
+	    <input type="text" class="form-control w-50" name="username" id="exampleInputUsername1">
+	  </div>
+	  <div class="mb-3">
+	    <label for="exampleInputPassword1" class="form-label">Password</label>
+	    <input type="password" name="password" class="form-control w-50" id="exampleInputPassword1">
+	  </div>
+	  <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+{% endblock %}

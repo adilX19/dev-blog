@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %} SignUp {% endblock %}
+
+{% block content %}
+	<h2>
+		Welcome to <b>D-viz</b> Blog....
+	</h2>
+	<hr>
+	<h5>SignUp for an Account.</h5>
+	<br>
+	<form method="POST" action=".">
+		{% csrf_token %}
+	  <div class="mb-3">
+	    <label for="exampleInputUsername1" class="form-label">Username</label>
+	    <input type="text" class="form-control w-50" name="username" id="exampleInputUsername1">
+	    <small id="username-feedback"></small>
+	  </div>
+	  <div class="mb-3">
+	    <label for="exampleInputEmail1" class="form-label">Email</label>
+	    <input type="email" class="form-control w-50" name="email" id="exampleInputEmail1">
+	  </div>
+
+	  <div class="mb-3">
+	    <label for="exampleInputPassword1" class="form-label">Password</label>
+	    <input type="password" name="password" class="form-control w-50" id="exampleInputPassword1">
+	  </div>
+
+	  <div class="mb-3">
+	    <label for="exampleInputPassword2" class="form-label">Confirm Password</label>
+	    <input type="password" name="conf_password" class="form-control w-50" id="exampleInputPassword2">
+	  </div>
+
+	  <button type="submit" class="btn btn-primary">SignUp</button>
+	</form>
+
+	<script type="text/javascript">
+		document.querySelector('#exampleInputUsername1').addEventListener('focusout', validateUsername);
+
+		function validateUsername(event){
+			event.preventDefault();
+			const username = event.target.value;
+
+			if (username === "") {
+				// if username is empty, dont send request to BACKEND...
+				return 
+			}
+
+			const url = `/accounts/validate/${username}/`;
+
+			var xhttp = new XMLHttpRequest();
+
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					const resp = JSON.parse(this.responseText);
+
+					var feedback = document.querySelector('#username-feedback');
+
+					if (resp["used"]) {
+						feedback.className = 'text-danger';
+						feedback.textContent = 'Username already taken';
+					} else {
+						feedback.className = 'text-success';
+						feedback.textContent = 'Username available';
+					}
+				}
+			}; 
+
+			xhttp.open('GET', url, true);
+			xhttp.send();
+		}
+
+	</script>
+{% endblock %}
