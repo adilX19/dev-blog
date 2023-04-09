@@ -69,9 +69,21 @@
 <script>
 	document.querySelector("#comment_form").addEventListener('submit', (event) => {
 		event.preventDefault();
+		let url = ""
 		let text = event.target.comment_text.value;
 		console.log(text)
 
-		event.target.reset();
+		var xhttp = new XMLHttpRequest();
+
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var results = JSON.parse(this.responseText);
+				console.log(results);
+				event.target.reset();
+			}
+		};
+
+		xhttp.open("GET", url);
+		xhttp.send();
 	})
 </script>

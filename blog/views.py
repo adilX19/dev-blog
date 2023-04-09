@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponse
-from .models import Post, Comment
+from .models import Post, Comment, CommentReply
 from .forms import PostCreationForm
 
 def home_page(request):
@@ -74,3 +74,27 @@ def add_comment_view(request, post_id):
 		}
 
 	return JsonResponse(response)
+
+def add_reply_to_comment_view(request, comment_id):
+
+	if request.method == 'POST':
+		comment = get_object_or_404(Comment, id=comment_id)
+
+		if comment and request.user.is_authenticated:
+			reply = CommentReply(
+				reply_to=comment,
+				reply_by=request.user,
+				content=request.POST['reply'],
+			)
+			reply.save()
+
+			return JsonResponse({
+				'reply_id': reply.id,
+				'profile_image': reply.reply_by.profile_image.url,
+				'full_name': reply.reply_by.full_name,
+				'date_created': reply.date_created,
+				'content': reply.content,
+				'message': 'successfully added reply'
+			}, status=200)
+
+	return JsonResponse({"message": "Something went wrong!"}, status=400)
