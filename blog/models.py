@@ -35,3 +35,17 @@ class Comment(models.Model):
 
 	def __str__(self):
 		return f"Comment on {self.post.title}"
+
+class CommentReply(models.Model):
+	reply_to = models.ForeignKey(Comment, related_name='replies', on_delete=models.CASCADE)
+	content      = models.TextField()
+	reply_by     = models.ForeignKey(UserAccount, null=True, on_delete=models.CASCADE)
+	active       = models.BooleanField(default=True) 
+	date_created = models.DateField(auto_now_add=True)
+	date_updated = models.DateField(auto_now=True)
+
+	def __str__(self):
+		return f"{self.reply_by.username} replied to {self.reply_to.user.username} on {self.reply_to}"
+		
+	class Meta:
+		verbose_name_plural = 'Comments Replies'

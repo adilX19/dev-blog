@@ -23,7 +23,7 @@
 
 	<br>
 
-	{% include "comments.html" with comments_count=post.comments.count %}
+	{% include "comments.html" with comments=post.comments.all %}
 
 	<br>
 
