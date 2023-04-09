@@ -8,6 +8,8 @@ class Post(models.Model):
 	author = models.ForeignKey(UserAccount, related_name='posts', on_delete=models.CASCADE)
 	title = models.CharField(max_length=500)
 	image = models.FileField(upload_to=f"post-images {datetime.now().strftime('%Y-%m-%d')}", null=True, blank=True)
+	image_caption_link = models.URLField(null=True, blank=True)
+	image_caption_text = models.CharField(max_length=200, null=True, blank=True)
 	body = models.TextField()
 	slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
 	date_published = models.DateTimeField()

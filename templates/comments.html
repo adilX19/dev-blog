@@ -31,30 +31,14 @@
 									</div>
 
 									<div class="col-4" style="text-align:right;">
-										<div class="reply">
+										<!-- <div class="reply">
 											<a href="#"><span><i class="fa fa-reply"></i> reply</span></a>
-										</div>
+										</div> -->
 									</div>
 								</div>
 								{{ comment.text }}
 
-								{% for reply in comment.replies.all %}
-									<div class="media mt-4">
-										<a class="pr-3" href="#"><img class="rounded-circle"
-												alt="Bootstrap Media Another Preview"
-												src="https://i.imgur.com/xELPaag.jpg" /></a>
-										<div class="media-body">
-
-											<div class="row">
-												<div class="col-12 d-flex">
-													<h5>{{ reply.reply_by.username }}</h5>
-													<span>- 3 hours ago</span>
-												</div>
-											</div>
-											{{ reply.content }}
-										</div>
-									</div>
-								{% endfor %}
+								<!-- Reply portion -->
 
 							</div>
 						</div>
@@ -98,9 +82,7 @@
 							</div>
 
 							<div class="col-4" style="text-align:right;">
-								<div class="reply">
-									<a href="#"><span><i class="fa fa-reply"></i> reply</span></a>
-								</div>
+								
 							</div>
 						</div>
 						${results['text']}
