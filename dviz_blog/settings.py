@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'taggit',
     'django_flatpickr',
+    'django_social_share',
 ]
 
 SITE_ID = 1

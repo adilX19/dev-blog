@@ -1,8 +1,6 @@
 REMAINING FEATURES...
 
- - Share
  - Saved Posts
-
 
 
 <!-- <div class="reply">

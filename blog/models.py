@@ -51,3 +51,13 @@ class CommentReply(models.Model):
 		
 	class Meta:
 		verbose_name_plural = 'Comments Replies'
+
+class SavedPost(models.Model):
+	post = models.ForeignKey(Post, related_name='saved_by', on_delete=models.CASCADE)
+	author = models.ForeignKey(UserAccount, related_name='saved_posts', on_delete=models.CASCADE)
+
+	def __str__(self):
+		return f"{self.post.title} Saved by {self.author.username}"
+		
+	class Meta:
+		verbose_name_plural = 'Saved Posts'

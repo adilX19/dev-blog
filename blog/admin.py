@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment, CommentReply
+from .models import Post, Comment, CommentReply, SavedPost
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -12,3 +12,7 @@ class CommentAdmin(admin.ModelAdmin):
 @admin.register(CommentReply)
 class CommentReplyAdmin(admin.ModelAdmin):
 	list_display = ['reply_by', 'content']
+
+@admin.register(SavedPost)
+class SavedPostAdmin(admin.ModelAdmin):
+	list_display = ['post', 'author']

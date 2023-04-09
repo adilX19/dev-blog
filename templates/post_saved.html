@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %} Saved Posts {% endblock %}
+
+{% block content %}
+	<h3>Saved Posts</h3>
+	<br>
+	<div class="row">
+		{% for data in posts %}
+
+			<div class="col col-md-5 card ml-3">
+				<img class="card-img-top" src="{{ data.post.image.url }}" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title">{{ data.post.title }}</h5>
+    				<p class="card-text">{{ data.post.body|truncatewords:10 }}</p>
+    				<a href="{% url 'blog:unsave_post' data.post.id %}" class="btn btn-sm btn-danger">delete</a>
+				</div>
+			</div>
+
+		{% endfor %}
+	</div>
+
+{% endblock %}

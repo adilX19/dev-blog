@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponse
-from .models import Post, Comment, CommentReply
+from .models import Post, Comment, CommentReply, SavedPost
 from .forms import PostCreationForm
 
 def home_page(request):
@@ -12,6 +12,12 @@ def home_page(request):
 def post_list_view(request):
 	posts = request.user.posts.all().order_by('-date_published')
 	template_name = 'post_list.html'
+	context = { 'posts': posts }
+	return render(request, template_name, context)
+
+def saved_posts_view(request):
+	posts = request.user.saved_posts.all().order_by('-id')
+	template_name = 'post_saved.html'
 	context = { 'posts': posts }
 	return render(request, template_name, context)
 
@@ -99,3 +105,26 @@ def add_reply_to_comment_view(request, comment_id):
 			}, status=200)
 
 	return JsonResponse({"message": "Something went wrong!"}, status=400)
+
+
+def save_post(request):
+	if request.method == 'POST':
+		post_id = request.POST.get("post_id", None)
+		post = get_object_or_404(Post, id=post_id)
+
+		if post.author != request.user:
+			if not SavedPost.objects.filter(author=request.user, post=post).exists():
+				SavedPost.objects.create(author=request.user, post=post)
+				return JsonResponse({"message": "Post saved to user list"})
+		
+	return JsonResponse({"message": "Error saving user post"})
+
+
+def unsave_post(request, post_id):
+	post = get_object_or_404(Post, id=post_id)
+	if post.author != request.user:
+		if SavedPost.objects.filter(author=request.user, post=post).exists():
+			SavedPost.objects.create(author=request.user, post=post).delete()
+			return JsonResponse({"message": "Post deleted from user list"})
+			
+	return JsonResponse({"message": "Error deleting user post"})
