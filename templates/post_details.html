@@ -23,7 +23,7 @@
 
 	<br>
 
-	{% include "comments.html" with comments=post.comments.all %}
+	{% include "comments.html" with comments=post.comments.all post_id=post.id ctoken=csrf_token %}
 
 	<br>
 

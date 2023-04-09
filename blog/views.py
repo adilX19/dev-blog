@@ -65,6 +65,7 @@ def add_comment_view(request, post_id):
 		response = {
 			'text': comment_text,
 			'author': request.user.username,
+			'image': request.user.image.url,
 			'date': date,
 			'saved': True
 		}
@@ -90,7 +91,7 @@ def add_reply_to_comment_view(request, comment_id):
 
 			return JsonResponse({
 				'reply_id': reply.id,
-				'profile_image': reply.reply_by.profile_image.url,
+				'profile_image': reply.reply_by.image.url,
 				'full_name': reply.reply_by.full_name,
 				'date_created': reply.date_created,
 				'content': reply.content,
